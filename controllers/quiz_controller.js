@@ -12,3 +12,8 @@ exports.answer = function(req, res) {
       res.render('quizes/answer', {respuesta: 'Incorrecto'});
    }
 };
+
+//GET /quizes/author: router.get('/quizes/author', quizController.author);
+exports.author = function(req, res) {
+	res.render('quizes/author', {autor: 'Steve Job ;-)'});
+};

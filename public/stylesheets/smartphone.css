@@ -5,3 +5,20 @@ body             { background: #333; }
 h2 span, section h3 { display: none; }
 body                { font-size: xx-large; }
 footer, input       { font-size: large; }
+
+.contenedor {
+    display: flex; /* or inline-flex */
+    flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	text-align: left;
+}
+.izquierda {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.derecha {
+  width: 100%;
+  text-align: left;
+}
