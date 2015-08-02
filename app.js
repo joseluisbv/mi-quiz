@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var partials = require('express-partials');
+var methodOverride = require('method-override');
 var routes = require('./routes/index');
 
 var app = express();
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 //con urlencoded gestionamos los parámetros POST codificados en el body
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //instalación de express-partials
