@@ -10,6 +10,9 @@ header, nav, section { background: #eee; text-align: center;}
 footer               { background: #eee; text-align: center;}
 nav span             { margin: 0px 10px 0px 0px;}
 
+/*Clase errores para resaltar errores al renderizarlos*/
+#ErrorMsgs           { color: #f61; font-size: smaler}
+
 .contenedor {
     display: flex; /* or inline-flex */
     flex-direction: row;
