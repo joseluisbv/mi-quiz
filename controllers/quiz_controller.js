@@ -46,7 +46,6 @@ exports.answer = function(req, res) {
 // GET /quizes/:id/edit
 exports.edit = function(req, res) {
   var quiz = req.quiz;  // req.quiz: autoload de instancia de quiz
-
   res.render('quizes/edit', {quiz: quiz, errors: []});
 };
 
@@ -54,7 +53,6 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
   req.quiz.pregunta  = req.body.quiz.pregunta;
   req.quiz.respuesta = req.body.quiz.respuesta;
-
   req.quiz
   .validate()
   .then(
@@ -67,7 +65,7 @@ exports.update = function(req, res) {
         .then( function(){ res.redirect('/quizes');});
       }     // Redirección HTTP a lista de preguntas (URL relativo)
     }
-  );
+  ).catch(function(error){next(error)});
 };
 
 // GET /quizes/new
@@ -75,7 +73,6 @@ exports.new = function(req, res) {
   var quiz = models.Quiz.build(
     {pregunta: "Pregunta", respuesta: "Respuesta"}
   );
-
   res.render('quizes/new', {quiz: quiz, errors: []});
 };
 
@@ -94,7 +91,14 @@ exports.create = function(req, res) {
         .then( function(){ res.redirect('/quizes')}) 
       }      // res.redirect: Redirección HTTP a lista de preguntas
     }
-  );
+  ).catch(function(error){next(error)});
+};
+
+// DELETE /quizes/:id
+exports.destroy = function(req, res) {
+  req.quiz.destroy().then( function() {
+    res.redirect('/quizes');
+  }).catch(function(error){next(error)});
 };
 
 //GET /quizes/author: router.get('/quizes/author', quizController.author);
