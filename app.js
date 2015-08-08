@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var partials = require('express-partials');
 var methodOverride = require('method-override');
+var session = require('express-session');
 var routes = require('./routes/index');
 
 var app = express();
@@ -21,12 +22,24 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 //con urlencoded gestionamos los parámetros POST codificados en el body
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser('Quiz 2015'));
+app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //instalación de express-partials
 app.use(partials());
+
+// Helpers dinamicos:
+app.use(function(req, res, next) {
+  // guardar path en session.redir para despues de login
+  if (!req.path.match(/\/login|\/logout/)) {
+    req.session.redir = req.path;
+  }
+  // Hacer visible req.session en las vistas
+  res.locals.session = req.session;
+  next();
+});
 
 app.use('/', routes);
 
