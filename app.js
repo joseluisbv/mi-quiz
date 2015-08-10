@@ -30,6 +30,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 //instalación de express-partials
 app.use(partials());
 
+// Control sesion inactiva
+app.use(function(req, res, next){
+  var timeMaxInactivo = 120000;
+  if(req.session.user){
+    if((Date.now() - req.session.user.timestamphttp) > timeMaxInactivo){
+      // Tiempo expirado
+      delete req.session.user;
+    } else { 
+      // No ha expirado el tiempo
+      req.session.user.timestamphttp = Date.now();
+    }
+  }
+  next();
+});
+
 // Helpers dinamicos:
 app.use(function(req, res, next) {
   // guardar path en session.redir para despues de login
